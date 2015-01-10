@@ -16,16 +16,19 @@
       $(document).ready(function(){
         var $body = $('body');
         var $stream = $('#tweetstream');
+        //function to write a tweet to the timeline
+        var writeTweet = function(tweet){
+          var $tweet = $('<li><div class ="tweet"></div></li>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " || created " + moment(tweet.created_at).fromNow());
+          $tweet.prependTo($stream);
+        };
         //$body.html('');
 
         //initial generation
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<li><div class ="tweet"></div></li>');
-          //text is jquery method
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.prependTo($stream);
+          writeTweet(tweet);
           index -= 1;
         }
         //secondary generation
@@ -33,10 +36,7 @@
         var loadTweet = function(){
           var index = streams.home.length-1;
           var tweet = streams.home[index];
-          var $tweet = $('<li><div class ="tweet"></div></li>');
-          //text is jquery method
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " || created " + moment(tweet.created_at).fromNow());
-          $tweet.prependTo($stream);
+          writeTweet(tweet);
           //let's not get crowded
           $("#tweetstream li:last").remove();
         }
