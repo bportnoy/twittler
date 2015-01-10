@@ -3,23 +3,44 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="underscore-min.js"></script>
+
   </head>
   <body>
+    <ul id="tweetstream">
+
+    </ul>
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        var $stream = $('#tweetstream');
+        //$body.html('');
 
+        //initial generation
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
+          var $tweet = $('<li><div class ="tweet"></div></li>');
+          //text is jquery method
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.prependTo($stream);
           index -= 1;
         }
-
+        //secondary generation
+        //a function to call
+        var loadTweet = function(){
+          var index = streams.home.length-1;
+          var tweet = streams.home[index];
+          var $tweet = $('<li><div class ="tweet"></div></li>');
+          //text is jquery method
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + "\nTimestamp: " + tweet.created_at);
+          $tweet.prependTo($stream);
+          //let's not get crowded
+          $("#tweetstream li:last").remove();
+        }
+        //yes I know I'm not showing all the tweets, it was fucking annoying
+        setInterval(loadTweet,4000);
       });
 
     </script>
