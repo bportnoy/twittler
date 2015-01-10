@@ -5,12 +5,14 @@
     <script src="data_generator.js"></script>
     <script src="underscore-min.js"></script>
     <script src="moment.js"></script>
-
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
   </head>
-  <body>
-    <ul id="tweetstream">
-
-    </ul>
+  <body class="indigo lighten-5">
+    <div class="container">
+    <div class="col s6 offset-s3"><ul id="tweetstream" class="collapsible">
+    </ul></div>
+  </div>
     <script>
 
       $(document).ready(function(){
@@ -18,11 +20,14 @@
         var $stream = $('#tweetstream');
         //function to write a tweet to the timeline
         var writeTweet = function(tweet){
-          var $tweet = $('<li><div class ="tweet"></div></li>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " || created " + moment(tweet.created_at).fromNow());
+          var $tweetText = $('<div class ="tweet collapsible-header amber lighten-4"></div>');
+          var $tweetDate = $('<div class ="tweet collapsible-body amber lighten-2"><p></p></div>');
+          $tweetText.html('<a class="namelink">@' + tweet.user + '</a>' + ': ' + tweet.message);
+          $tweetDate.text("created " + moment(tweet.created_at).fromNow());
+          var $tweet = $('<li></li>').append($tweetText).append($tweetDate);
           $tweet.prependTo($stream);
+          $('.collapsible').collapsible({ "accordion" : false });
         };
-        //$body.html('');
 
         //initial generation
         var index = streams.home.length - 1;
@@ -31,13 +36,13 @@
           writeTweet(tweet);
           index -= 1;
         }
+
         //secondary generation
         //a function to call
         var loadTweet = function(){
           var index = streams.home.length-1;
           var tweet = streams.home[index];
           writeTweet(tweet);
-          //let's not get crowded
           $("#tweetstream li:last").remove();
         }
         //yes I know I'm not showing all the tweets, it was fucking annoying
