@@ -4,6 +4,7 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="underscore-min.js"></script>
+    <script src="moment.js"></script>
 
   </head>
   <body>
@@ -34,7 +35,7 @@
           var tweet = streams.home[index];
           var $tweet = $('<li><div class ="tweet"></div></li>');
           //text is jquery method
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + "\nTimestamp: " + tweet.created_at);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " || created " + moment(tweet.created_at).fromNow());
           $tweet.prependTo($stream);
           //let's not get crowded
           $("#tweetstream li:last").remove();
