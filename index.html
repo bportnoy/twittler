@@ -11,7 +11,7 @@
   <body class="indigo lighten-5">
       <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Twittler</a>
+      <a href="" class="brand-logo" id="home">Twittler</a>
       <ul id="nav-mobile" class="right side-nav">
         <li><a href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
       </ul>
@@ -49,15 +49,10 @@
         }
 
         //click handler for namelinks
-        $("namelink").on("click", userTweets($(this).text()));
+        //$("namelink").on("click", userTweets($(this).text()));
+
 
         //initial generation
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          writeTweet(tweet);
-          index -= 1;
-        }
 
         //secondary generation
         //a function to call
@@ -68,8 +63,20 @@
           $("#tweetstream li:last").remove();
         }
         //yes I know I'm not showing all the tweets
+
         var tweetInterval = setInterval(loadTweet,4000);
-        tweetInterval();
+        //initial generation
+        var goHome = function(){
+          var index = streams.home.length - 1;
+          while(index >= 0){
+            var tweet = streams.home[index];
+            writeTweet(tweet);
+            index -= 1;
+          }
+          tweetInterval();
+        }
+        goHome();
+        $("#home").on("click",goHome());
       });
 
     </script>
