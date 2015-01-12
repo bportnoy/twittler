@@ -9,9 +9,18 @@
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
   </head>
   <body class="indigo lighten-5">
+      <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Twittler</a>
+      <ul id="nav-mobile" class="right side-nav">
+        <li><a href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
+      </ul>
+    </div>
+  </nav>
+        
     <div class="container">
-    <div class="col s6 offset-s3"><ul id="tweetstream" class="collapsible">
-    </ul></div>
+    <div class="row" id="">
+      <div class="col s12 m6" id="tweetstream"></div>
   </div>
     <script>
 
@@ -20,14 +29,27 @@
         var $stream = $('#tweetstream');
         //function to write a tweet to the timeline
         var writeTweet = function(tweet){
-          var $tweetText = $('<div class ="tweet collapsible-header amber lighten-4"></div>');
-          var $tweetDate = $('<div class ="tweet collapsible-body amber lighten-2"><p></p></div>');
-          $tweetText.html('<a class="namelink">@' + tweet.user + '</a>' + ': ' + tweet.message);
+          var $tweetText = $('<div></div>');
+          var $tweetDate = $('<div class ="tweet card-action blue-grey lighten-3"><p></p></div>');
+          $tweetText.html('<span class="namelink card-title"><a href=#>@' + tweet.user + '</a></span><p> ' + tweet.message + "</p>");
           $tweetDate.text("created " + moment(tweet.created_at).fromNow());
-          var $tweet = $('<li></li>').append($tweetText).append($tweetDate);
+          var $tweet = $("<div class='card blue-grey'></div>").append($tweetText).append($tweetDate);
           $tweet.prependTo($stream);
-          $('.collapsible').collapsible({ "accordion" : false });
         };
+        console.log(streams.users);
+        //function to clear homepage and display user's tweets
+        var userTweets = function(user){
+          var userstream = streams.users[user];
+          $stream.empty();
+          clearInterval(tweetInterval);
+          for (var i = 0; i<userstream.length; i++){
+            var tweet = userstream[i];
+            writeTweet(tweet);
+          }
+        }
+
+        //click handler for namelinks
+        $("namelink").on("click", userTweets($(this).text()));
 
         //initial generation
         var index = streams.home.length - 1;
@@ -45,8 +67,9 @@
           writeTweet(tweet);
           $("#tweetstream li:last").remove();
         }
-        //yes I know I'm not showing all the tweets, it was fucking annoying
-        setInterval(loadTweet,4000);
+        //yes I know I'm not showing all the tweets
+        var tweetInterval = setInterval(loadTweet,4000);
+        tweetInterval();
       });
 
     </script>
