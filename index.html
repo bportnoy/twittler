@@ -11,7 +11,7 @@
   <body class="indigo lighten-5">
       <nav>
     <div class="nav-wrapper">
-      <a href="" class="brand-logo" id="home">Twittler</a>
+      <a class="brand-logo" id="home">Twittler</a>
       <ul id="nav-mobile" class="right side-nav">
         <li><a href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
       </ul>
@@ -30,8 +30,8 @@
         //function to write a tweet to the timeline
         var writeTweet = function(tweet){
           var $tweetText = $('<div></div>');
-          var $tweetDate = $('<div class ="tweet card-action blue-grey lighten-3"><p></p></div>');
-          $tweetText.html('<span class="namelink card-title"><a href=#>@' + tweet.user + '</a></span><p> ' + tweet.message + "</p>");
+          var $tweetDate = $('<div class ="tweet card-action blue-grey lighten-3 z-depth-2"><p></p></div>');
+          $tweetText.html('<span class="card-title"><a class="namelink">@' + tweet.user + '</a></span><p> ' + tweet.message + "</p>");
           $tweetDate.text("created " + moment(tweet.created_at).fromNow());
           var $tweet = $("<div class='card blue-grey'></div>").append($tweetText).append($tweetDate);
           $tweet.prependTo($stream);
@@ -52,21 +52,20 @@
         //$("namelink").on("click", userTweets($(this).text()));
 
 
-        //initial generation
-
         //secondary generation
         //a function to call
         var loadTweet = function(){
           var index = streams.home.length-1;
           var tweet = streams.home[index];
           writeTweet(tweet);
-          $("#tweetstream li:last").remove();
+          $("#tweetstream .card:last").remove();
         }
-        //yes I know I'm not showing all the tweets
 
+        //yes I know I'm not showing all the tweets
         var tweetInterval = setInterval(loadTweet,4000);
         //initial generation
         var goHome = function(){
+          console.log("went home!");
           var index = streams.home.length - 1;
           while(index >= 0){
             var tweet = streams.home[index];
@@ -76,7 +75,7 @@
           tweetInterval();
         }
         goHome();
-        $("#home").on("click",goHome());
+        $("#home").click(goHome());
       });
 
     </script>
