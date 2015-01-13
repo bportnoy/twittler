@@ -11,7 +11,7 @@
   <body class="indigo lighten-5">
       <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo" id="home"><span>Twittler<span></a>
+      <a href="index.html" class="brand-logo" id="home"><span>Twittler<span></a>
       <ul id="nav-mobile" class="right side-nav">
         <li><a id="testlink" href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
       </ul>
@@ -36,7 +36,6 @@
           var $tweet = $("<div class='card blue-grey'></div>").append($tweetText).append($tweetDate);
           $tweet.prependTo($stream);
         };
-        console.log(streams.users);
 
         //function to clear homepage and display user's tweets
         function userTweets(event){
@@ -83,11 +82,10 @@
             writeTweet(tweet);
             index -= 1;
           }
-        //var tweetInterval = setInterval(loadTweet,4000);
         }
 
         goHome();
-        $("#home").on("click", goHome);
+        //$("#home").on("click", goHome);
 
       });
 
