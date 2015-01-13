@@ -11,9 +11,9 @@
   <body class="indigo lighten-5">
       <nav>
     <div class="nav-wrapper">
-      <a class="brand-logo" id="home">Twittler</a>
+      <a href="#" class="brand-logo" id="home"><span>Twittler<span></a>
       <ul id="nav-mobile" class="right side-nav">
-        <li><a href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
+        <li><a id="testlink" href="http://www.bradleyportnoy.com">BradleyPortnoy.com</a></li>
       </ul>
     </div>
   </nav>
@@ -38,23 +38,29 @@
         };
         console.log(streams.users);
         //function to clear homepage and display user's tweets
-        var userTweets = function(user){
-          var userstream = streams.users[user];
+        function userTweets(event){
+          var user = event.currentTarget.firstChild.data.slice(1);
+          //var name = user.substring(2,user.length);
+          /*var userstream = streams.users[user];
           $stream.empty();
           clearInterval(tweetInterval);
           for (var i = 0; i<userstream.length; i++){
             var tweet = userstream[i];
-            writeTweet(tweet);
-          }
-        }
+            writeTweet(tweet);*/
+          };
 
+          function testFunction(){
+            console.log("test");
+          }
+          var testArray = [1,3,5];
         //click handler for namelinks
-        //$("namelink").on("click", userTweets($(this).text()));
+        $stream.on("click", ".namelink", userTweets);
+
 
 
         //secondary generation
         //a function to call
-        var loadTweet = function(){
+        function loadTweet(){
           var index = streams.home.length-1;
           var tweet = streams.home[index];
           writeTweet(tweet);
@@ -72,10 +78,10 @@
             writeTweet(tweet);
             index -= 1;
           }
-          tweetInterval();
+          //tweetInterval();
         }
         goHome();
-        $("#home").click(goHome());
+        $("#home").on("click", goHome);
       });
 
     </script>
