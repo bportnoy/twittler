@@ -37,13 +37,18 @@
           $tweet.prependTo($stream);
         };
         console.log(streams.users);
+
         //function to clear homepage and display user's tweets
         function userTweets(event){
           var user = event.currentTarget.firstChild.data.slice(1);
-          //var name = user.substring(2,user.length);
-          /*var userstream = streams.users[user];
+          var userstream = streams.users[user];
           $stream.empty();
           clearInterval(tweetInterval);
+          for (var j = 0; j<userstream.length; j++){
+            var tweet = userstream[j];
+            writeTweet(tweet);
+          }
+          /*clearInterval(tweetInterval);
           for (var i = 0; i<userstream.length; i++){
             var tweet = userstream[i];
             writeTweet(tweet);*/
@@ -69,19 +74,21 @@
 
         //yes I know I'm not showing all the tweets
         var tweetInterval = setInterval(loadTweet,4000);
+
         //initial generation
         var goHome = function(){
-          console.log("went home!");
           var index = streams.home.length - 1;
           while(index >= 0){
             var tweet = streams.home[index];
             writeTweet(tweet);
             index -= 1;
           }
-          //tweetInterval();
+        var tweetInterval = setInterval(loadTweet,4000);
         }
+
         goHome();
         $("#home").on("click", goHome);
+
       });
 
     </script>
