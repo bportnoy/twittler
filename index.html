@@ -73,7 +73,7 @@
         }
 
         //yes I know I'm not showing all the tweets
-        var tweetInterval = setInterval(loadTweet,4000);
+        var tweetInterval = setInterval(function(){loadTweet();},4000);
 
         //initial generation
         var goHome = function(){
@@ -83,7 +83,7 @@
             writeTweet(tweet);
             index -= 1;
           }
-        var tweetInterval = setInterval(loadTweet,4000);
+        //var tweetInterval = setInterval(loadTweet,4000);
         }
 
         goHome();
